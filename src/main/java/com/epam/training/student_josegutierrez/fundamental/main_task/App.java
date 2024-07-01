@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez;
+package com.epam.training.student_josegutierrez.fundamental.main_task;
 
 /**
  * Hello world!
