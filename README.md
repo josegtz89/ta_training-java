@@ -13,15 +13,18 @@ Before running this project, ensure you have the following installed on your mac
 To get started with this project, follow these steps:
 
 **Clone the repository:**
-   git clone https://github.com/josegtz89/ta_training-java.git
-   cd "project-directory"
+
+    git clone https://github.com/josegtz89/ta_training-java.git
+    cd "project-directory"
 
 **Switch to the Master Branch:**
 The main development and testing are done on the master branch. Ensure you are on this branch:
+
     git checkout master
 
 **Run the tests:**
 Use the following Maven command to run the tests:
+
     mvn clean test
 
 ## Troubleshooting
