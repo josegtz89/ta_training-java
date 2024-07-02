@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez;
+package com.epam.training.student_josegutierrez.Misc;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
