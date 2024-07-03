@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.fundamental.Misc;
+package com.epam.training.student_josegutierrez.pageobjects.Misc;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
