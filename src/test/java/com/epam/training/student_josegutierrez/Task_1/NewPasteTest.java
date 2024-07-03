@@ -11,35 +11,54 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.time.Duration;
 
 public class NewPasteTest {
     private WebDriver driver;
-    private WebDriverWait wait;
-    private PasteBinHome pastebinhome;
-    private PasteBinOptions pastebinoptions;
+    private PasteBinHome pastebinHome;
+    private PasteBinOptions pastebinOptions;
 
     @BeforeEach
     public void setUp() {
         driver = DriverSetup.getDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        pastebinhome = new PasteBinHome(driver);
-        pastebinoptions = new PasteBinOptions(driver);
+        pastebinHome = new PasteBinHome(driver);
+        pastebinOptions = new PasteBinOptions(driver);
+    }
+
+
+    @Test
+    public void testFormDataEntry() {
+        String expectedTitle = "helloweb";
+        String expectedContent = "Hello from WebDriver";
+
+        pastebinHome.open();
+        pastebinHome.enterDetails(expectedContent, expectedTitle);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement titleField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("postform-name")));
+        WebElement contentField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("postform-text")));
+
+        assertEquals(expectedTitle, titleField.getAttribute("value"), "Title field does not contain the expected text.");
+        assertEquals(expectedContent, contentField.getAttribute("value"), "Content field does not contain the expected text.");
     }
 
     @Test
-    public void testCreateNewPaste() {
-        pastebinhome.open();
-        pastebinhome.enterDetails("Hello from WebDriver", "helloweb");
-        pastebinoptions.setExpiration10Minutes();
+    public void testFormSubmissionAndValidation() {
+        String expectedTitle = "helloweb";
+        String expectedContent = "Hello from WebDriver";
 
-        WebElement selectedOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//span[@class='select2-selection__rendered' and contains(text(),'10 Minutes')]")));
-        assertEquals("10 Minutes", selectedOption.getText(), "Expiration not set to 10 Minutes");
+        pastebinHome.open();
+        pastebinHome.enterDetails(expectedContent, expectedTitle);
+        pastebinOptions.setExpiration10Minutes();
+        pastebinOptions.submitPaste();
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement pasteTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
+        WebElement pasteContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".source .text")));
+
+        assertEquals(expectedTitle, pasteTitle.getText(), "Paste title does not match expected after submit.");
+        assertTrue(pasteContent.getText().contains(expectedContent), "Paste content does not match expected after submission.");
     }
 
     @AfterEach

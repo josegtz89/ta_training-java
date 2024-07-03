@@ -3,8 +3,6 @@ package com.epam.training.student_josegutierrez.pageobjects.Task_1;
 import com.epam.training.student_josegutierrez.locators.PasteBinLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -24,5 +22,10 @@ public class PasteBinOptions implements PasteBinLocators {
         dropdown.click();
         WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EXPIRATION_OPTION_10_MIN)));
         option.click();
+    }
+
+    public void submitPaste() {
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SUBMIT_BUTTON)));
+        submitButton.click();
     }
 }
