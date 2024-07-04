@@ -1,7 +1,7 @@
-package com.epam.training.student_josegutierrez.Task_1;
+package com.epam.training.student_josegutierrez.Task_2;
 
-import com.epam.training.student_josegutierrez.pageobjects.Task_1.PasteBinHome;
-import com.epam.training.student_josegutierrez.pageobjects.Task_1.PasteBinOptions;
+import com.epam.training.student_josegutierrez.pageobjects.Task_2.PasteBinHome;
+import com.epam.training.student_josegutierrez.pageobjects.Task_2.PasteBinOptions;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +29,12 @@ public class NewPasteTest {
 
     @Test
     public void TestNewPasteDataEntry() {
-        String expectedTitle = "helloweb";
-        String expectedContent = "Hello from WebDriver";
+        String expectedTitle = "how to gain dominance among developers";
+        String expectedContent = """
+            git config --global user.name "New Sheriff in Town"
+            git reset $(git commit-tree HEAD^{tree} -m "Legacy code")
+            git push origin master --force
+            """;
 
         pastebinHome.open();
         pastebinHome.enterDetails(expectedContent, expectedTitle);
@@ -45,20 +49,28 @@ public class NewPasteTest {
 
     @Test
     public void TestNewPasteSubmit() {
-        String expectedTitle = "helloweb";
-        String expectedContent = "Hello from WebDriver";
+        String expectedTitle = "how to gain dominance among developers";
+        String expectedContent = """
+            git config --global user.name "New Sheriff in Town"
+            git reset $(git commit-tree HEAD^{tree} -m "Legacy code")
+            git push origin master --force
+            """;
+        String expectedSyntax = "Bash";
 
         pastebinHome.open();
         pastebinHome.enterDetails(expectedContent, expectedTitle);
+        pastebinOptions.setSyntaxHighlightingBash();
         pastebinOptions.setExpiration10Minutes();
         pastebinOptions.submitPaste();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement pasteTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h1")));
-        WebElement pasteContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".source .text")));
+        WebElement pasteContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".source .bash")));
+        WebElement syntaxLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a[href*='/archive/bash']")));
 
         assertEquals(expectedTitle, pasteTitle.getText(), "Paste Title does not match expected after submit.");
         assertTrue(pasteContent.getText().contains(expectedContent), "Paste Content does not match expected after submission.");
+        assertTrue(syntaxLabel.getText().contains(expectedSyntax), "Syntax highlighting for Bash is not set correctly.");
     }
 
     @AfterEach
