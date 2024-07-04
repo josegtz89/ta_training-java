@@ -9,11 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 public class PasteBinHome implements PasteBinLocators {
     private WebDriver driver;
 
-    @FindBy(id = PASTE_AREA)
-    private WebElement pasteArea;
-
-    @FindBy(id = PASTE_NAME)
-    private WebElement pasteName;
+    @FindBy(id = PASTE_TEXT)
+    private WebElement pasteText;
+    @FindBy(id = PASTE_TITLE)
+    private WebElement pasteTitle;
 
     public PasteBinHome(WebDriver driver) {
         this.driver = driver;
@@ -25,7 +24,7 @@ public class PasteBinHome implements PasteBinLocators {
     }
 
     public void enterDetails(String code, String title) {
-        pasteArea.sendKeys(code);
-        pasteName.sendKeys(title);
+        pasteText.sendKeys(code);
+        pasteTitle.sendKeys(title);
     }
 }

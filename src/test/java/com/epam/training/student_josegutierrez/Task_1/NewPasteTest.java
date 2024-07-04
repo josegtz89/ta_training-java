@@ -11,8 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NewPasteTest {
     private WebDriver driver;
