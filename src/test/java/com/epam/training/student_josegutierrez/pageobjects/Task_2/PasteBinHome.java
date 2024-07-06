@@ -3,6 +3,7 @@ package com.epam.training.student_josegutierrez.pageobjects.Task_2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -24,6 +25,7 @@ public class PasteBinHome {
     public PasteBinHome(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this);
     }
 
     /**
@@ -52,7 +54,7 @@ public class PasteBinHome {
      * Sets the syntax highlighting for the paste to Bash.
      */
     public void setSyntaxHighlightingBash() {
-        WebElement syntaxDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.id("postform-format")));
+        WebElement syntaxDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(),'Syntax Highlighting:')]/following-sibling::div//span[@class='select2-selection select2-selection--single']")));
         syntaxDropdown.click();
         WebElement bashOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='Bash']")));
         bashOption.click();
@@ -62,7 +64,7 @@ public class PasteBinHome {
      * Sets the expiration of the paste to "10 Minutes".
      */
     public void setExpiration10Minutes() {
-        WebElement expirationDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.id("postform-expiration")));
+        WebElement expirationDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[text()='Paste Expiration:']/following-sibling::div//span[@class='select2-selection select2-selection--single']")));
         expirationDropdown.click();
         WebElement tenMinutesOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[text()='10 Minutes']")));
         tenMinutesOption.click();
