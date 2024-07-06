@@ -1,6 +1,5 @@
 package com.epam.training.student_josegutierrez.pageobjects.Task_1;
 
-import com.epam.training.student_josegutierrez.locators.PasteBinLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
@@ -8,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-public class PasteBinOptions implements PasteBinLocators {
+public class PasteBinOptions {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -18,14 +17,14 @@ public class PasteBinOptions implements PasteBinLocators {
     }
 
     public void setExpiration10Minutes() {
-        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EXPIRATION_DROPDOWN)));
+        WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[text()='Paste Expiration:']/following-sibling::div//span[@class='select2-selection select2-selection--single']")));
         dropdown.click();
-        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(EXPIRATION_OPTION_10_MIN)));
+        WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(text(),'10 Minutes')]")));
         option.click();
     }
 
     public void submitPaste() {
-        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SUBMIT_BUTTON)));
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.btn.-big[type='submit']")));
         submitButton.click();
     }
 }

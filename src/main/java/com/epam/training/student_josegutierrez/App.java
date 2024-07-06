@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.pageobjects.Misc;
+package com.epam.training.student_josegutierrez;
 
 /**
  * Hello world!

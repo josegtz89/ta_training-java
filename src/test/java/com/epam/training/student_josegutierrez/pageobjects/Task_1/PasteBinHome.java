@@ -1,18 +1,17 @@
-package com.epam.training.student_josegutierrez.pageobjects.Task_2;
+package com.epam.training.student_josegutierrez.pageobjects.Task_1;
 
-import com.epam.training.student_josegutierrez.locators.PasteBinLocators;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PasteBinHome implements PasteBinLocators {
+public class PasteBinHome {
     private WebDriver driver;
 
-    @FindBy(id = PASTE_TEXT)
+    @FindBy(id = "postform-text")
     private WebElement pasteText;
-
-    @FindBy(id = PASTE_TITLE)
+    @FindBy(id = "postform-name")
     private WebElement pasteTitle;
 
     public PasteBinHome(WebDriver driver) {
