@@ -4,6 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 /**
  * This class represents the Estimate summary page of the Google Cloud Pricing Calculator after an estimate has been created.
@@ -11,7 +14,9 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class EstimateSummaryPage extends BasePage {
 
-    @FindBy(xpath = "//span[text()='Number of Instances']/following-sibling::span[@class='Kfvdz']")
+    @FindBy(xpath = "//h4[contains(@class, 'QvLFl') and contains(text(), 'Cost Estimate Summary')]")
+    private WebElement costEstimateSummaryTitle;
+    @FindBy(xpath = "//span[text()='Number of Instances']/following::span[@class='Kfvdz'][1]")
     private WebElement numberOfInstances;
 
     @FindBy(xpath = "//span[text()='Operating System / Software']/following-sibling::span[@class='Kfvdz']")
@@ -46,13 +51,27 @@ public class EstimateSummaryPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public boolean isCostEstimateSummaryVisible() {
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.visibilityOf(costEstimateSummaryTitle)).isDisplayed();
+        } catch (Exception e) {
+            System.out.println("Cost Estimate Summary title is not visible: " + e.getMessage());
+            return false;
+        }
+    }
+
     /**
      * Retrieves the number of instances specified in the estimate.
      * @return Number of instances as a String.
      */
     public String getNumberOfInstances() {
         try {
-            return numberOfInstances.getText();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(numberOfInstances));
+            String instanceText = numberOfInstances.getText();
+            System.out.println("Retrieved number of instances text: " + instanceText);
+            return instanceText;
         } catch (Exception e) {
             System.out.println("Failed to get the number of instances: " + e.getMessage());
             return null;

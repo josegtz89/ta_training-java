@@ -2,10 +2,12 @@ package com.epam.training.student_josegutierrez.tests.Task_3;
 
 import com.epam.training.student_josegutierrez.pageobjects.Task_3.HomePage;
 import com.epam.training.student_josegutierrez.pageobjects.Task_3.ComputeEngineForm;
+import com.epam.training.student_josegutierrez.pageobjects.Task_3.EstimateSummaryPage;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
@@ -14,6 +16,7 @@ public class ComputeEngineTests {
     private static WebDriver driver;
     private static HomePage homePage;
     private static ComputeEngineForm computeEngineForm;
+    private static EstimateSummaryPage estimateSummaryPage;
 
     @BeforeClass
     public static void setUpClass() {
@@ -21,6 +24,7 @@ public class ComputeEngineTests {
         driver.manage().window().maximize();
         homePage = new HomePage(driver);
         computeEngineForm = new ComputeEngineForm(driver);
+        estimateSummaryPage = new EstimateSummaryPage(driver);
         homePage.open();
     }
 
@@ -29,12 +33,15 @@ public class ComputeEngineTests {
 
         homePage.addToEstimate();
         homePage.selectComputeEngine();
-        computeEngineForm.setNumberOfInstances("4");
+
+        // Number of Instances selection
+        String expectedInstances = "4";
+        computeEngineForm.setNumberOfInstances(expectedInstances);
 
         // Operating System selection
         computeEngineForm.clickElement(computeEngineForm.operatingSystemDropdown, "Operating System Dropdown");
         WebElement osOption = driver.findElement(By.cssSelector("li[data-value='free-debian-centos-coreos-ubuntu-or-byol-bring-your-own-license']"));
-        computeEngineForm.clickElement(osOption, "Free Operating System Option");
+        computeEngineForm.clickElement(osOption, "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License) Option");
 
         // Machine Family selection
         computeEngineForm.clickElement(computeEngineForm.machineFamilyDropdown, "Machine Family Dropdown");
@@ -75,8 +82,8 @@ public class ComputeEngineTests {
         computeEngineForm.clickElement(regionOption, "Europe West4 (Netherlands) Region Option");
 
         // Discount selection
-        //WebElement oneYearDiscountOption = driver.findElement(By.xpath("//input[@id='1-year']"));
-        //computeEngineForm.clickElement(oneYearDiscountOption, "1 Year Discount Option");
+        WebElement oneYearDiscountOption = driver.findElement(By.cssSelector("label[for='1-year']"));
+        computeEngineForm.clickElement(oneYearDiscountOption, "1 Year Discount Option");
 
         // Share button click
         computeEngineForm.clickShareButton();
@@ -84,6 +91,13 @@ public class ComputeEngineTests {
         // Open Estimate Summary page
         computeEngineForm.openEstimateSummary();
 
+        // Get the text from the element for debugging
+        //String actualInstances = estimateSummaryPage.getNumberOfInstances();
+        //System.out.println("Number of instances retrieved: " + actualInstances);
+
+        // Assertions
+        Assert.assertTrue("Cost Estimate Summary is not visible", estimateSummaryPage.isCostEstimateSummaryVisible());
+        //Assert.assertEquals("Instance count mismatch", expectedInstances, actualInstances);
 
 
 

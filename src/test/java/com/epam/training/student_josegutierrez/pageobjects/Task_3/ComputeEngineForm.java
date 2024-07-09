@@ -1,11 +1,12 @@
 package com.epam.training.student_josegutierrez.pageobjects.Task_3;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import java.util.ArrayList;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 /**
  * Page object for interacting with the Compute Engine form on the Google Cloud Pricing Calculator.
@@ -47,6 +48,9 @@ public class ComputeEngineForm extends BasePage {
 
     @FindBy(css = "a[track-name='open estimate summary']")
     private WebElement openEstimateSummaryButton;
+
+
+
 
     /**
      * Constructor to initialize the ComputeEngineForm within the driver context.
@@ -109,9 +113,6 @@ public class ComputeEngineForm extends BasePage {
             throw e;
         }
     }
-
-
-
 
     /**
      * Clicks on a specified web element and logs the action.
