@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class HomePage extends BasePage {
 
-    @FindBy(xpath = "//button[contains(text(), 'Add to estimate')]")
+    @FindBy(xpath = "//span[text()='Add to estimate']")
     private WebElement addToEstimateButton;
 
     @FindBy(xpath = "//h2[contains(text(), 'Compute Engine')]")
@@ -36,15 +36,13 @@ public class HomePage extends BasePage {
      * Triggers the process to add a new estimate.
      */
     public void addToEstimate() {
-        wait.until(ExpectedConditions.elementToBeClickable(addToEstimateButton));
-        addToEstimateButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(addToEstimateButton)).click();
     }
 
     /**
      * Selects the "Compute Engine" option from the modal that appears after clicking "Add to estimate."
      */
     public void selectComputeEngine() {
-        wait.until(ExpectedConditions.elementToBeClickable(computeEngineButton));
-        computeEngineButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(computeEngineButton)).click();
     }
 }
