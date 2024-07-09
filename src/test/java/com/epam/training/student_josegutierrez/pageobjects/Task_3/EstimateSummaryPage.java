@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 /**
- * This class represents the Estimate summary page of the Google Cloud Pricing Calculator after an estimate has been created.
+ * Page object for interacting with the Estimate summary page of the Google Cloud Pricing Calculator after an estimate has been created.
  * It provides methods to retrieve information about the configuration specified in the Compute Engine form
  */
 public class EstimateSummaryPage extends BasePage {
@@ -46,11 +46,19 @@ public class EstimateSummaryPage extends BasePage {
     @FindBy(xpath = "//span[text()='Committed use discount options']/following-sibling::span[@class='Kfvdz']")
     private WebElement committedUseDiscount;
 
+    /**
+     * Constructor to initialize the EstimateSummaryPage within the driver context.
+     * @param driver The WebDriver instance for browser manipulation.
+     */
     public EstimateSummaryPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Checks if the Cost Estimate Summary is visible.
+     * @return true if page is visible, otherwise false.
+     */
     public boolean isCostEstimateSummaryVisible() {
         try {
             return new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -69,9 +77,7 @@ public class EstimateSummaryPage extends BasePage {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(numberOfInstances));
-            String instanceText = numberOfInstances.getText();
-            System.out.println("Retrieved number of instances text: " + instanceText);
-            return instanceText;
+            return numberOfInstances.getText();
         } catch (Exception e) {
             System.out.println("Failed to get the number of instances: " + e.getMessage());
             return null;
@@ -84,6 +90,8 @@ public class EstimateSummaryPage extends BasePage {
      */
     public String getOperatingSystem() {
         try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(operatingSystem));
             return operatingSystem.getText();
         } catch (Exception e) {
             System.out.println("Failed to get the operating system: " + e.getMessage());

@@ -5,11 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 /**
  * Page object for interacting with the Compute Engine form on the Google Cloud Pricing Calculator.
+ * It provides methods to interact with the elements within the Compute Engine form.
  */
 public class ComputeEngineForm extends BasePage {
 
@@ -118,7 +117,7 @@ public class ComputeEngineForm extends BasePage {
      * Clicks on a specified web element and logs the action.
      *
      * @param element     the web element to be clicked.
-     * @param elementName the name of the element for logging purposes.
+     * @param elementName the name of the element for debugging purposes.
      */
     public void clickElement(WebElement element, String elementName) {
         try {
