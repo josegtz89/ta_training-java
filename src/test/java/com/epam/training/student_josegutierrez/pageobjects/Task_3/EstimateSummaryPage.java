@@ -175,4 +175,4 @@ public class EstimateSummaryPage extends BasePage {
             return null;
         }
     }
-}}
+}
