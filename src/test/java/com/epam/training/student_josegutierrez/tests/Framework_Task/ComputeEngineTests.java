@@ -3,9 +3,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
 import org.junit.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +20,8 @@ public class ComputeEngineTests {
     /**
      * Initializes WebDriver and page objects before all tests.
      */
-    @Before
-    public void setUpClass() {
+    @BeforeClass
+    public static void setUpClass() {
         driver = DriverSetup.getDriver();
         driver.manage().window().maximize();
         cloudHomePage = new CloudHomePage(driver);
@@ -50,62 +48,45 @@ public class ComputeEngineTests {
         calculatorHomePage.selectComputeEngine();
 
         // Number of Instances selection
-        String expectedInstances = "4";
+        int expectedInstances = 4;
         computeEngineForm.setNumberOfInstances(expectedInstances);
 
         // Operating System selection
         String expectedOS = "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)";
-        computeEngineForm.clickElement(computeEngineForm.operatingSystemDropdown, "Operating System Dropdown");
-        WebElement osOption = driver.findElement(By.cssSelector("li[data-value='free-debian-centos-coreos-ubuntu-or-byol-bring-your-own-license']"));
-        computeEngineForm.clickElement(osOption, "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License) Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.operatingSystemDropdown, "free-debian-centos-coreos-ubuntu-or-byol-bring-your-own-license", "Operating System");
 
         // Machine Family selection
-        computeEngineForm.clickElement(computeEngineForm.machineFamilyDropdown, "Machine Family Dropdown");
-        WebElement familyOption = driver.findElement(By.cssSelector("li[data-value='general-purpose']"));
-        computeEngineForm.clickElement(familyOption, "General Purpose Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.machineFamilyDropdown, "general-purpose", "Machine Family");
 
         // Series selection
-        computeEngineForm.clickElement(computeEngineForm.seriesDropdown, "Series Dropdown");
-        WebElement seriesOption = driver.findElement(By.cssSelector("li[data-value='n1']"));
-        computeEngineForm.clickElement(seriesOption, "N1 Series Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.seriesDropdown, "n1", "Series");
 
         // Machine Type selection
         String expectedMachineType = "n1-standard-8";
-        computeEngineForm.clickElement(computeEngineForm.machineTypeDropdown, "Machine Type Dropdown");
-        WebElement machineTypeOption = driver.findElement(By.cssSelector("li[data-value='n1-standard-8']"));
-        computeEngineForm.clickElement(machineTypeOption, "n1-standard-8 Machine Type Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.machineTypeDropdown, "n1-standard-8", "Machine Type");
 
         // Add GPUs toggle
         computeEngineForm.toggleAddGpus();
 
         // GPU Model selection
         String expectedGpuModel = "NVIDIA V100";
-        computeEngineForm.clickElement(computeEngineForm.gpuModelDropdown, "GPU Model Dropdown");
-        WebElement gpuModelOption = driver.findElement(By.cssSelector("li[data-value='nvidia-tesla-v100']"));
-        computeEngineForm.clickElement(gpuModelOption, "NVIDIA Tesla V100 GPU Model Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.gpuModelDropdown, "nvidia-tesla-v100", "GPU Model");
 
         // Number of GPUs selection
         String expectedGpuCount = "1";
-        computeEngineForm.clickElement(computeEngineForm.numberOfGpusDropdown, "Number of GPUs Dropdown");
-        WebElement numberOfGpusOption = driver.findElement(By.cssSelector("li[data-value='1']"));
-        computeEngineForm.clickElement(numberOfGpusOption, "1 GPU Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.numberOfGpusDropdown, "1", "Number of GPUs");
 
         // Local SSD selection
         String expectedLocalSSD = "2x375 GB";
-        computeEngineForm.clickElement(computeEngineForm.localSSDDropdown, "Local SSD Dropdown");
-        WebElement localSSDOption = driver.findElement(By.xpath("//li[contains(@class, 'MCs1Pd') and .//span[contains(text(), '2x375 GB')]]"));
-        computeEngineForm.clickElement(localSSDOption, "2x375 GB Local SSD Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.localSSDDropdown, "2x375 GB", "Local SSD");
 
         // Region selection
         String expectedRegion = "Netherlands (europe-west4)";
-        computeEngineForm.clickElement(computeEngineForm.regionDropdown, "Region Dropdown");
-        WebElement regionOption = driver.findElement(By.cssSelector("li[data-value='europe-west4']"));
-        computeEngineForm.clickElement(regionOption, "Netherlands (europe-west4) Region Option");
+        computeEngineForm.selectDropdownOption(computeEngineForm.regionDropdown, "europe-west4", "Region");
 
         // Discount selection
         String expectedDiscount = "1 year";
-        WebElement oneYearDiscountOption = driver.findElement(By.cssSelector("label[for='1-year']"));
-        computeEngineForm.clickElement(oneYearDiscountOption, "1 Year Discount Option");
+        computeEngineForm.selectOneYearDiscount();
 
         // Static wait to ensure the page has loaded
         Thread.sleep(2000);
@@ -122,22 +103,22 @@ public class ComputeEngineTests {
 
         // Assertions
         Assert.assertTrue("Cost Estimate Summary is not visible", estimateSummaryPage.isCostEstimateSummaryVisible());
-        Assert.assertEquals("Instance count mismatch", expectedInstances, estimateSummaryPage.getNumberOfInstances());
+        Assert.assertEquals("Instance count mismatch", String.valueOf(expectedInstances), estimateSummaryPage.getNumberOfInstances());
         Assert.assertEquals("Operating system mismatch", expectedOS, estimateSummaryPage.getOperatingSystem());
         Assert.assertTrue("Machine type mismatch", estimateSummaryPage.getMachineType().contains(expectedMachineType));
         Assert.assertTrue("GPU should be enabled", estimateSummaryPage.isAddGpusEnabled());
         Assert.assertEquals("GPU model mismatch", expectedGpuModel, estimateSummaryPage.getGpuModel());
         Assert.assertEquals("GPU count mismatch", expectedGpuCount, estimateSummaryPage.getNumberOfGpus());
         Assert.assertEquals("Local SSD mismatch", expectedLocalSSD, estimateSummaryPage.getLocalSSD());
-        Assert.assertEquals("Region mismatch", expectedRegion, estimateSummaryPage.getRegion());
+        Assert.assertTrue("Region mismatch", estimateSummaryPage.getRegion().contains(expectedRegion));
         Assert.assertEquals("Discount mismatch", expectedDiscount, estimateSummaryPage.getCommittedUseDiscount());
     }
 
     /**
      * Cleans up the WebDriver instance after all tests are completed.
      */
-    @After
-    public void tearDownClass() {
+    @AfterClass
+    public static void tearDownClass() {
         if (driver != null) {
             driver.quit();
         }

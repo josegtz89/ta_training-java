@@ -1,6 +1,7 @@
 package com.epam.training.student_josegutierrez.pageobjects.Framework_Task;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +43,9 @@ public class ComputeEngineForm extends BasePage {
     @FindBy(xpath = "//span[contains(text(), 'Region')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement regionDropdown;
 
+    @FindBy(css = "label[for='1-year']")
+    private WebElement oneYearDiscountButton;
+
     @FindBy(css = "button[aria-label='Open Share Estimate dialog']")
     private WebElement shareButton;
 
@@ -63,14 +67,63 @@ public class ComputeEngineForm extends BasePage {
      * Sets the number of instances in the Compute Engine form.
      * @param numberOfInstances The number of instances to set.
      */
-    public void setNumberOfInstances(String numberOfInstances) {
+    public void setNumberOfInstances(int numberOfInstances) {
+        fillInputField(numberOfInstancesInput, String.valueOf(numberOfInstances), "Number of Instances");
+    }
+
+    /**
+     * Fills a specified input field with a given value and logs the action.
+     * @param element the input field WebElement.
+     * @param value the value to be set in the input field.
+     * @param fieldName the name of the field for debugging purposes.
+     */
+    private void fillInputField(WebElement element, String value, String fieldName) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(numberOfInstancesInput));
-            numberOfInstancesInput.clear();
-            numberOfInstancesInput.sendKeys(numberOfInstances);
-            System.out.println("Number of instances set to: " + numberOfInstances);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            element.clear();
+            element.sendKeys(value);
+            System.out.println(fieldName + " set to: " + value);
         } catch (Exception e) {
-            System.out.println("Error setting number of instances: " + e.getMessage());
+            System.out.println("Error setting " + fieldName + ": " + e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Selects an option from a dropdown element using its value.
+     * @param dropdown The dropdown WebElement.
+     * @param optionValue The value of the option to be selected.
+     * @param dropdownName The name of the dropdown for logging purposes.
+     */
+    public void selectDropdownOption(WebElement dropdown, String optionValue, String dropdownName) {
+        try {
+            clickElement(dropdown, dropdownName + " Dropdown");
+            WebElement option;
+            if (dropdownName.equals("Local SSD")) {
+                option = driver.findElement(By.xpath("//li[contains(@class, 'MCs1Pd') and .//span[contains(text(), '" + optionValue + "')]]"));
+            } else {
+                option = driver.findElement(By.cssSelector("li[data-value='" + optionValue + "']"));
+            }
+            clickElement(option, optionValue + " Option");
+        } catch (Exception e) {
+            System.out.println("Error selecting option in " + dropdownName + ": " + e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Clicks on a specified web element and logs the action.
+     *
+     * @param element     the web element to be clicked.
+     * @param elementName the name of the element for debugging purposes.
+     */
+    private void clickElement(WebElement element, String elementName) {
+        try {
+            WebElement clickableElement = wait.until(ExpectedConditions.elementToBeClickable(element));
+            clickableElement.click();
+            System.out.println(elementName + " clicked successfully.");
+        } catch (Exception e) {
+            System.out.println("Error clicking " + elementName + ": " + e.getMessage());
             throw e;
         }
     }
@@ -84,6 +137,20 @@ public class ComputeEngineForm extends BasePage {
             System.out.println("Add GPUs toggled successfully.");
         } catch (Exception e) {
             System.out.println("Failed to toggle the Add GPUs button: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Clicks on the '1 Year Discount' button.
+     */
+    public void selectOneYearDiscount() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(oneYearDiscountButton));
+            oneYearDiscountButton.click();
+            System.out.println("1 Year Discount Option selected successfully.");
+        } catch (Exception e) {
+            System.out.println("Failed to select the 1 Year Discount Option: " + e.getMessage());
             throw e;
         }
     }
@@ -109,23 +176,6 @@ public class ComputeEngineForm extends BasePage {
             System.out.println("Estimate summary page opened successfully.");
         } catch (Exception e) {
             System.out.println("Failed to open Estimate Summary: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    /**
-     * Clicks on a specified web element and logs the action.
-     *
-     * @param element     the web element to be clicked.
-     * @param elementName the name of the element for debugging purposes.
-     */
-    public void clickElement(WebElement element, String elementName) {
-        try {
-            WebElement clickableElement = wait.until(ExpectedConditions.elementToBeClickable(element));
-            clickableElement.click();
-            System.out.println(elementName + " selected successfully.");
-        } catch (Exception e) {
-            System.out.println("Error clicking " + elementName + ": " + e.getMessage());
             throw e;
         }
     }
