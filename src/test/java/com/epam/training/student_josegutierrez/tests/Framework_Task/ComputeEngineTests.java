@@ -1,17 +1,11 @@
 package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
-import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.ComputeEngineForm;
-import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.EstimateSummaryPage;
-import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.CalculatorHomePage;
+import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 
 /**
@@ -19,6 +13,8 @@ import java.util.ArrayList;
  */
 public class ComputeEngineTests {
     private static WebDriver driver;
+    private static CloudHomePage cloudHomePage;
+    private static SearchResultsPage searchResultsPage;
     private static CalculatorHomePage calculatorHomePage;
     private static ComputeEngineForm computeEngineForm;
     private static EstimateSummaryPage estimateSummaryPage;
@@ -26,14 +22,16 @@ public class ComputeEngineTests {
     /**
      * Initializes WebDriver and page objects before all tests.
      */
-    @BeforeClass
-    public static void setUpClass() {
+    @Before
+    public void setUpClass() {
         driver = DriverSetup.getDriver();
         driver.manage().window().maximize();
+        cloudHomePage = new CloudHomePage(driver);
+        searchResultsPage = new SearchResultsPage(driver);
         calculatorHomePage = new CalculatorHomePage(driver);
         computeEngineForm = new ComputeEngineForm(driver);
         estimateSummaryPage = new EstimateSummaryPage(driver);
-        calculatorHomePage.open();
+        cloudHomePage.open();
     }
 
     /**
@@ -41,7 +39,13 @@ public class ComputeEngineTests {
      */
     @Test
     public void testComputeEngineEstimateCreation() throws InterruptedException {
+        // Navigate to Google Cloud homepage and perform a search
+        CloudHomePage.searchFor("Google Cloud Platform Pricing Calculator");
 
+        // Select the calculator from the search results
+        searchResultsPage.goToPricingCalculator();
+
+        // Proceed with adding an estimate and selecting compute engine
         calculatorHomePage.addToEstimate();
         calculatorHomePage.selectComputeEngine();
 
@@ -132,8 +136,8 @@ public class ComputeEngineTests {
     /**
      * Cleans up the WebDriver instance after all tests are completed.
      */
-    @AfterClass
-    public static void tearDownClass() {
+    @After
+    public void tearDownClass() {
         if (driver != null) {
             driver.quit();
         }

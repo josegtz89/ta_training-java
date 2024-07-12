@@ -26,13 +26,6 @@ public class CalculatorHomePage extends BasePage {
     }
 
     /**
-     * Navigates to the Google Cloud Pricing Calculator homepage.
-     */
-    public void open() {
-        driver.get("https://cloud.google.com/products/calculator");
-    }
-
-    /**
      * Triggers the process to add a new estimate.
      */
     public void addToEstimate() {
