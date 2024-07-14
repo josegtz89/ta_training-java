@@ -27,7 +27,7 @@ public class ComputeEngineTests {
      */
     @BeforeClass
     public static void setUpClass() {
-        driver = DriverSetup.getDriver();
+        driver = DriverSetup.getDriver("chrome");
         driver.manage().window().maximize();
         homePage = new HomePage(driver);
         computeEngineForm = new ComputeEngineForm(driver);

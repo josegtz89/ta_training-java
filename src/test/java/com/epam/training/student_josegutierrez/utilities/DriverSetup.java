@@ -1,20 +1,36 @@
 package com.epam.training.student_josegutierrez.utilities;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 /**
- * Utility class for setting up the WebDriver instance.
+ * Utility class for setting up the WebDriver instance using WebDriverManager.
  */
 public class DriverSetup {
     /**
-     * Creates and returns a new instance of ChromeDriver.
-     * Make sure the ChromeDriver executable is set in the system path or set it programmatically here.
-     * @return A new instance of ChromeDriver.
+     * Returns a WebDriver instance based on the specified browser type.
+     * @param browserType The type of the browser (e.g., "chrome", "firefox", "edge").
+     * @return A WebDriver instance.
      */
-    public static WebDriver getDriver() {
-        // Optionally set the path to the chromedriver executable if not set in system properties
-        // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
-        return new ChromeDriver();
+    public static WebDriver getDriver(String browserType) {
+        WebDriver driver;
+        switch (browserType.toLowerCase()) {
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                driver = new EdgeDriver();
+                break;
+            case "chrome":
+            default:
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+        }
+        return driver;
     }
 }

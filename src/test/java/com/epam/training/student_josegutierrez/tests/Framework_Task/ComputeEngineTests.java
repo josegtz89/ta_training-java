@@ -22,7 +22,7 @@ public class ComputeEngineTests {
      */
     @BeforeClass
     public static void setUpClass() {
-        driver = DriverSetup.getDriver();
+        driver = DriverSetup.getDriver("chrome");
         driver.manage().window().maximize();
         cloudHomePage = new CloudHomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);

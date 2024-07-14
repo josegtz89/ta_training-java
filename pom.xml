@@ -43,6 +43,21 @@
       <scope>test</scope>
     </dependency>
 
+      <dependency>
+          <groupId>com.epam.training.student_josegutierrez</groupId>
+          <artifactId>java_project</artifactId>
+          <version>1.0</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>io.github.bonigarcia</groupId>
+          <artifactId>webdrivermanager</artifactId>
+          <version>5.9.1</version>
+          <scope>test</scope>
+      </dependency>
+
+
   </dependencies>
     <build>
         <plugins>

@@ -21,7 +21,7 @@ public class NewPasteTest {
 
     @BeforeEach
     public void setUp() {
-        driver = DriverSetup.getDriver();
+        driver = DriverSetup.getDriver("chrome");
         pastebinHome = new PasteBinHome(driver);
         pastebinOptions = new PasteBinOptions(driver);
     }
