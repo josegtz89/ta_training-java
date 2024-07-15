@@ -149,7 +149,7 @@ public class ComputeEngineForm extends BasePage {
      */
     public void selectDiscount(String discountOption) {
         try {
-            WebElement discountButton = driver.findElement(By.cssSelector("label[for='" + discountOption + "']"));
+            WebElement discountButton = driver.findElement(By.cssSelector("label[for='116" + discountOption + "']"));
             clickElement(discountButton, discountOption + " Discount Option");
         } catch (Exception e) {
             System.out.println("Failed to select the " + discountOption + " Discount Option: " + e.getMessage());

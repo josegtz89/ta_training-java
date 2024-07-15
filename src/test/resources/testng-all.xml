@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Tests">
+<suite name="Full Test Suite">
     <listeners>
         <listener class-name="com.epam.training.student_josegutierrez.utilities.TestListener" />
     </listeners>
-    <test name="Framework Task Tests">
+    <test name="Complete Test">
         <classes>
             <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.ComputeEngineTests"/>
         </classes>

@@ -3,7 +3,10 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
-import org.junit.*;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 
@@ -104,16 +107,16 @@ public class ComputeEngineTests {
         driver.switchTo().window(tabs.get(tabs.size() - 1));
 
         // Assertions
-        Assert.assertTrue("Cost Estimate Summary is not visible", estimateSummaryPage.isCostEstimateSummaryVisible());
-        Assert.assertEquals("Instance count mismatch", String.valueOf(expectedInstances), estimateSummaryPage.getNumberOfInstances());
-        Assert.assertEquals("Operating system mismatch", expectedOS, estimateSummaryPage.getOperatingSystem());
-        Assert.assertTrue("Machine type mismatch", estimateSummaryPage.getMachineType().contains(expectedMachineType));
-        Assert.assertTrue("GPU should be enabled", estimateSummaryPage.isAddGpusEnabled());
-        Assert.assertEquals("GPU model mismatch", expectedGpuModel, estimateSummaryPage.getGpuModel());
-        Assert.assertEquals("GPU count mismatch", expectedGpuCount, estimateSummaryPage.getNumberOfGpus());
-        Assert.assertEquals("Local SSD mismatch", expectedLocalSSD, estimateSummaryPage.getLocalSSD());
-        Assert.assertTrue("Region mismatch", estimateSummaryPage.getRegion().contains(expectedRegion));
-        Assert.assertEquals("Discount mismatch", expectedDiscount, estimateSummaryPage.getCommittedUseDiscount());
+        Assert.assertTrue(estimateSummaryPage.isCostEstimateSummaryVisible(), "Cost Estimate Summary is not visible");
+        Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(expectedInstances), "Instance count mismatch");
+        Assert.assertEquals(estimateSummaryPage.getOperatingSystem(), expectedOS, "Operating system mismatch");
+        Assert.assertTrue(estimateSummaryPage.getMachineType().contains(expectedMachineType), "Machine type mismatch");
+        Assert.assertTrue(estimateSummaryPage.isAddGpusEnabled(), "GPU should be enabled");
+        Assert.assertEquals(estimateSummaryPage.getGpuModel(), expectedGpuModel, "GPU model mismatch");
+        Assert.assertEquals(estimateSummaryPage.getNumberOfGpus(), expectedGpuCount, "GPU count mismatch");
+        Assert.assertEquals(estimateSummaryPage.getLocalSSD(), expectedLocalSSD, "Local SSD mismatch");
+        Assert.assertTrue(estimateSummaryPage.getRegion().contains(expectedRegion), "Region mismatch");
+        Assert.assertEquals(estimateSummaryPage.getCommittedUseDiscount(), expectedDiscount, "Discount mismatch");
     }
 
     /**
