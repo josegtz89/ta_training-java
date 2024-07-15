@@ -144,15 +144,15 @@ public class ComputeEngineForm extends BasePage {
     }
 
     /**
-     * Clicks on the '1 Year Discount' button.
+     * Clicks on a discount option based on its label attribute.
+     * @param discountOption The label attribute value of the discount option.
      */
-    public void selectOneYearDiscount() {
+    public void selectDiscount(String discountOption) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(oneYearDiscountButton));
-            oneYearDiscountButton.click();
-            System.out.println("1 Year Discount Option selected successfully.");
+            WebElement discountButton = driver.findElement(By.cssSelector("label[for='" + discountOption + "']"));
+            clickElement(discountButton, discountOption + " Discount Option");
         } catch (Exception e) {
-            System.out.println("Failed to select the 1 Year Discount Option: " + e.getMessage());
+            System.out.println("Failed to select the " + discountOption + " Discount Option: " + e.getMessage());
             throw e;
         }
     }

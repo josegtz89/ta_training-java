@@ -1,6 +1,7 @@
 package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
+import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 import com.epam.training.student_josegutierrez.utilities.DriverSetup;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
@@ -38,7 +39,8 @@ public class ComputeEngineTests {
     @Test
     public void testComputeEngineEstimateCreation() throws InterruptedException {
         // Navigate to Google Cloud homepage and perform a search
-        CloudHomePage.searchFor("Google Cloud Platform Pricing Calculator");
+        String searchQuery = ConfigReader.getProperty("search.query");
+        CloudHomePage.searchFor(searchQuery);
 
         // Select the calculator from the search results
         searchResultsPage.goToPricingCalculator();
@@ -49,44 +51,44 @@ public class ComputeEngineTests {
 
         // Number of Instances selection
         int expectedInstances = 4;
-        computeEngineForm.setNumberOfInstances(expectedInstances);
+        computeEngineForm.setNumberOfInstances(Integer.parseInt(ConfigReader.getProperty("option.instances")));
 
         // Operating System selection
         String expectedOS = "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)";
-        computeEngineForm.selectDropdownOption(computeEngineForm.operatingSystemDropdown, "free-debian-centos-coreos-ubuntu-or-byol-bring-your-own-license", "Operating System");
+        computeEngineForm.selectDropdownOption(computeEngineForm.operatingSystemDropdown, ConfigReader.getProperty("option.operatingSystem"), "Operating System");
 
         // Machine Family selection
-        computeEngineForm.selectDropdownOption(computeEngineForm.machineFamilyDropdown, "general-purpose", "Machine Family");
+        computeEngineForm.selectDropdownOption(computeEngineForm.machineFamilyDropdown, ConfigReader.getProperty("option.machineFamily"), "Machine Family");
 
         // Series selection
-        computeEngineForm.selectDropdownOption(computeEngineForm.seriesDropdown, "n1", "Series");
+        computeEngineForm.selectDropdownOption(computeEngineForm.seriesDropdown, ConfigReader.getProperty("option.series"), "Series");
 
         // Machine Type selection
         String expectedMachineType = "n1-standard-8";
-        computeEngineForm.selectDropdownOption(computeEngineForm.machineTypeDropdown, "n1-standard-8", "Machine Type");
+        computeEngineForm.selectDropdownOption(computeEngineForm.machineTypeDropdown, ConfigReader.getProperty("option.machineType"), "Machine Type");
 
         // Add GPUs toggle
         computeEngineForm.toggleAddGpus();
 
         // GPU Model selection
         String expectedGpuModel = "NVIDIA V100";
-        computeEngineForm.selectDropdownOption(computeEngineForm.gpuModelDropdown, "nvidia-tesla-v100", "GPU Model");
+        computeEngineForm.selectDropdownOption(computeEngineForm.gpuModelDropdown, ConfigReader.getProperty("option.gpuModel"), "GPU Model");
 
         // Number of GPUs selection
         String expectedGpuCount = "1";
-        computeEngineForm.selectDropdownOption(computeEngineForm.numberOfGpusDropdown, "1", "Number of GPUs");
+        computeEngineForm.selectDropdownOption(computeEngineForm.numberOfGpusDropdown, ConfigReader.getProperty("option.numberOfGpus"), "Number of GPUs");
 
         // Local SSD selection
         String expectedLocalSSD = "2x375 GB";
-        computeEngineForm.selectDropdownOption(computeEngineForm.localSSDDropdown, "2x375 GB", "Local SSD");
+        computeEngineForm.selectDropdownOption(computeEngineForm.localSSDDropdown, ConfigReader.getProperty("option.localSSD"), "Local SSD");
 
         // Region selection
         String expectedRegion = "Netherlands (europe-west4)";
-        computeEngineForm.selectDropdownOption(computeEngineForm.regionDropdown, "europe-west4", "Region");
+        computeEngineForm.selectDropdownOption(computeEngineForm.regionDropdown, ConfigReader.getProperty("option.region"), "Region");
 
         // Discount selection
         String expectedDiscount = "1 year";
-        computeEngineForm.selectOneYearDiscount();
+        computeEngineForm.selectDiscount(ConfigReader.getProperty("option.discount"));
 
         // Static wait to ensure the page has loaded
         Thread.sleep(2000);

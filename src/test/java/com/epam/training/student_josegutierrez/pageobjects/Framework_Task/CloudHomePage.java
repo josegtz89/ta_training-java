@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 
 /**
  * Page object for the Google Cloud homepage.
@@ -29,7 +30,10 @@ public class CloudHomePage extends BasePage {
      * Opens the Google Cloud main homepage.
      */
     public void open() {
-        driver.get("https://cloud.google.com/");
+        //driver.get("https://cloud.google.com/");
+        String baseUrl = ConfigReader.getProperty("base.url");
+        driver.get(baseUrl);
+        System.out.println("Navigated to: " + baseUrl);
     }
 
     /**

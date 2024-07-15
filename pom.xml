@@ -56,9 +56,8 @@
           <version>5.9.1</version>
           <scope>test</scope>
       </dependency>
-
-
   </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -71,4 +70,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
