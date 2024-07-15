@@ -30,7 +30,6 @@ public class CloudHomePage extends BasePage {
      * Opens the Google Cloud main homepage.
      */
     public void open() {
-        //driver.get("https://cloud.google.com/");
         String baseUrl = ConfigReader.getProperty("base.url");
         driver.get(baseUrl);
         System.out.println("Navigated to: " + baseUrl);
