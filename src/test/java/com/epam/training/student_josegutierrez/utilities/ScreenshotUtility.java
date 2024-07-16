@@ -14,13 +14,13 @@ import java.util.Date;
 public class ScreenshotUtility {
 
     public static void takeScreenshot(WebDriver driver, String fileName) {
-        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String timestamp = formatter.format(new Date());
         Path targetPath = Paths.get("./screenshots/", fileName + "_" + timestamp + ".png");
         try {
             Files.createDirectories(targetPath.getParent());
-            Files.copy(scrFile.toPath(), targetPath);
+            Files.copy(screenshotFile.toPath(), targetPath);
             System.out.println("Screenshot saved to: " + targetPath.toString());
         } catch (IOException e) {
             e.printStackTrace();
