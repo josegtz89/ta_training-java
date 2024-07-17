@@ -1,5 +1,6 @@
 package com.epam.training.student_josegutierrez.utilities;
 
+import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.openqa.selenium.WebDriver;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;

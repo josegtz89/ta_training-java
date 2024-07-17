@@ -2,7 +2,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
-import com.epam.training.student_josegutierrez.utilities.DriverSetup;
+import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

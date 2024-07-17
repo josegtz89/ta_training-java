@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.utilities;
+package com.epam.training.student_josegutierrez.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
