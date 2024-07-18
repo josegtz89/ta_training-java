@@ -1,6 +1,6 @@
 package com.epam.training.student_josegutierrez.pageobjects.Framework_Task;
 
-
+import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,16 +44,11 @@ public class ComputeEngineForm extends BasePage {
     @FindBy(xpath = "//span[contains(text(), 'Region')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement regionDropdown;
 
-    @FindBy(css = "label[for='1-year']")
-    private WebElement oneYearDiscountButton;
-
     @FindBy(css = "button[aria-label='Open Share Estimate dialog']")
     private WebElement shareButton;
 
     @FindBy(css = "a[track-name='open estimate summary']")
     private WebElement openEstimateSummaryButton;
-
-
 
 
     /**
@@ -63,6 +58,30 @@ public class ComputeEngineForm extends BasePage {
     public ComputeEngineForm(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
+    }
+
+    /**
+     * Configures the Compute Engine Form using a configuration object.
+     * @param config Configuration object containing all required settings.
+     */
+    public void configureComputeEngine(ComputeEngineConfig config) {
+        if (config == null) {
+            throw new IllegalArgumentException("Config must not be null");
+        }
+
+        setNumberOfInstances(config.getNumberOfInstances());
+        selectDropdownOption(operatingSystemDropdown, config.getOperatingSystem(), "Operating System");
+        selectDropdownOption(machineFamilyDropdown, config.getMachineFamily(), "Machine Family");
+        selectDropdownOption(seriesDropdown, config.getSeries(), "Series");
+        selectDropdownOption(machineTypeDropdown, config.getMachineType(), "Machine Type");
+        toggleAddGpus(config.isGpuEnabled());
+        if (config.isGpuEnabled()) {
+            selectDropdownOption(gpuModelDropdown, config.getGpuModel(), "GPU Model");
+            selectDropdownOption(numberOfGpusDropdown, String.valueOf(config.getNumberOfGpus()), "Number of GPUs");
+        }
+        selectDropdownOption(localSSDDropdown, config.getLocalSSD(), "Local SSD");
+        selectDropdownOption(regionDropdown, config.getRegion(), "Region");
+        selectDiscount(config.getCommittedUseDiscount());
     }
 
     /**
@@ -113,9 +132,9 @@ public class ComputeEngineForm extends BasePage {
         }
     }
 
+
     /**
      * Clicks on a specified web element and logs the action.
-     *
      * @param element     the web element to be clicked.
      * @param elementName the name of the element for debugging purposes.
      */
@@ -132,11 +151,16 @@ public class ComputeEngineForm extends BasePage {
 
     /**
      * Enables or disables the Add GPUs option in the form.
+     * @param isEnabled true to enable GPUs, false to disable.
      */
-    public void toggleAddGpus() {
+    public void toggleAddGpus(boolean isEnabled) {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(addGpusSwitch)).click();
-            System.out.println("Add GPUs toggled successfully.");
+            WebElement GpusSwitch = wait.until(ExpectedConditions.elementToBeClickable(addGpusSwitch));
+            boolean currentState = GpusSwitch.getAttribute("aria-checked").equals("true");
+            if (currentState != isEnabled) {
+                GpusSwitch.click();
+                System.out.println("GPU toggle changed to " + isEnabled);
+            }
         } catch (Exception e) {
             System.out.println("Failed to toggle the Add GPUs button: " + e.getMessage());
             throw e;

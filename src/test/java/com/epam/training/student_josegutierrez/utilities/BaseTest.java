@@ -1,20 +1,29 @@
 package com.epam.training.student_josegutierrez.utilities;
 
+
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.openqa.selenium.WebDriver;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
+/**
+ * This abstract class serves as a base for all test classes.
+ */
 public abstract class BaseTest {
     protected static WebDriver driver;
 
+    /**
+     * Initializes the WebDriver before any tests are run.
+     */
     @BeforeClass
     public static void setUp() {
-        String browserType = ConfigReader.getProperty("browser.type");
-        driver = DriverSetup.getDriver(browserType);
+        driver = DriverSetup.getDriver(ConfigReader.getProperty("browser.type"));
         driver.manage().window().maximize();
     }
 
+    /**
+     * Cleans up the WebDriver after all tests in the class have completed.
+     */
     @AfterClass
     public static void tearDown() {
         if (driver != null) {
@@ -22,6 +31,10 @@ public abstract class BaseTest {
         }
     }
 
+    /**
+     * Provides access to the WebDriver instance for the test scenarios.
+     * @return The WebDriver instance being used by the tests.
+     */
     public static WebDriver getDriver() {
         return driver;
     }

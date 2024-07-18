@@ -1,39 +1,65 @@
 package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
+
+import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
+import com.epam.training.student_josegutierrez.utilities.BaseTest;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
-import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 
 /**
  * Test suite for verifying the Google Cloud Pricing Calculator's Compute Engine form.
+ * This class executes tests to ensure that all components of the Compute Engine form are correctly
+ * entered and selected, and that the final cost estimate summary reflects these selections accurately.
  */
-public class ComputeEngineTests {
-    private static WebDriver driver;
+public class ComputeEngineTests extends BaseTest {
     private static CloudHomePage cloudHomePage;
     private static SearchResultsPage searchResultsPage;
     private static CalculatorHomePage calculatorHomePage;
     private static ComputeEngineForm computeEngineForm;
     private static EstimateSummaryPage estimateSummaryPage;
+    private static ComputeEngineConfig config;
+
 
     /**
-     * Initializes WebDriver and page objects before all tests.
+     * Initializes WebDriver, page objects, and navigates to the Google Cloud homepage before all tests.
      */
     @BeforeClass
     public static void setUpClass() {
-        driver = DriverSetup.getDriver("chrome");
-        driver.manage().window().maximize();
         cloudHomePage = new CloudHomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);
         calculatorHomePage = new CalculatorHomePage(driver);
         computeEngineForm = new ComputeEngineForm(driver);
         estimateSummaryPage = new EstimateSummaryPage(driver);
         cloudHomePage.open();
+
+    }
+
+    /**
+     * Populates the ComputeEngineConfig object with values from properties files.
+     */
+    private static void populateConfigFromProperties() {
+        try {
+            config.setNumberOfInstances(Integer.parseInt(ConfigReader.getProperty("option.instances")));
+            config.setOperatingSystem(ConfigReader.getProperty("option.operatingSystem"));
+            config.setMachineFamily(ConfigReader.getProperty("option.machineFamily"));
+            config.setSeries(ConfigReader.getProperty("option.series"));
+            config.setMachineType(ConfigReader.getProperty("option.machineType"));
+            config.setGpuModel(ConfigReader.getProperty("option.gpuModel"));
+            config.setNumberOfGpus(Integer.parseInt(ConfigReader.getProperty("option.numberOfGpus")));
+            config.setLocalSSD(ConfigReader.getProperty("option.localSSD"));
+            config.setRegion(ConfigReader.getProperty("option.region"));
+            config.setCommittedUseDiscount(ConfigReader.getProperty("option.discount"));
+            config.toggleGpuEnabled();
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing number from properties: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error retrieving properties: " + e.getMessage());
+        }
     }
 
     /**
@@ -42,8 +68,7 @@ public class ComputeEngineTests {
     @Test
     public void testComputeEngineEstimateCreation() throws InterruptedException {
         // Navigate to Google Cloud homepage and perform a search
-        String searchQuery = ConfigReader.getProperty("search.query");
-        CloudHomePage.searchFor(searchQuery);
+        cloudHomePage.searchFor(ConfigReader.getProperty("search.query"));
 
         // Select the calculator from the search results
         searchResultsPage.goToPricingCalculator();
@@ -52,46 +77,20 @@ public class ComputeEngineTests {
         calculatorHomePage.addToEstimate();
         calculatorHomePage.selectComputeEngine();
 
-        // Number of Instances selection
-        int expectedInstances = 4;
-        computeEngineForm.setNumberOfInstances(Integer.parseInt(ConfigReader.getProperty("option.instances")));
+        // Configure the Compute Engine form with the settings from the config model
+        config = new ComputeEngineConfig();
+        populateConfigFromProperties();
+        computeEngineForm.configureComputeEngine(config);
 
-        // Operating System selection
-        String expectedOS = "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)";
-        computeEngineForm.selectDropdownOption(computeEngineForm.operatingSystemDropdown, ConfigReader.getProperty("option.operatingSystem"), "Operating System");
-
-        // Machine Family selection
-        computeEngineForm.selectDropdownOption(computeEngineForm.machineFamilyDropdown, ConfigReader.getProperty("option.machineFamily"), "Machine Family");
-
-        // Series selection
-        computeEngineForm.selectDropdownOption(computeEngineForm.seriesDropdown, ConfigReader.getProperty("option.series"), "Series");
-
-        // Machine Type selection
-        String expectedMachineType = "n1-standard-8";
-        computeEngineForm.selectDropdownOption(computeEngineForm.machineTypeDropdown, ConfigReader.getProperty("option.machineType"), "Machine Type");
-
-        // Add GPUs toggle
-        computeEngineForm.toggleAddGpus();
-
-        // GPU Model selection
-        String expectedGpuModel = "NVIDIA V100";
-        computeEngineForm.selectDropdownOption(computeEngineForm.gpuModelDropdown, ConfigReader.getProperty("option.gpuModel"), "GPU Model");
-
-        // Number of GPUs selection
-        String expectedGpuCount = "1";
-        computeEngineForm.selectDropdownOption(computeEngineForm.numberOfGpusDropdown, ConfigReader.getProperty("option.numberOfGpus"), "Number of GPUs");
-
-        // Local SSD selection
-        String expectedLocalSSD = "2x375 GB";
-        computeEngineForm.selectDropdownOption(computeEngineForm.localSSDDropdown, ConfigReader.getProperty("option.localSSD"), "Local SSD");
-
-        // Region selection
-        String expectedRegion = "Netherlands (europe-west4)";
-        computeEngineForm.selectDropdownOption(computeEngineForm.regionDropdown, ConfigReader.getProperty("option.region"), "Region");
-
-        // Discount selection
-        String expectedDiscount = "1 year";
-        computeEngineForm.selectDiscount(ConfigReader.getProperty("option.discount"));
+        // Expected data
+        int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
+        String expectedOS = ConfigReader.getProperty("expected.operatingSystem");
+        String expectedMachineType = ConfigReader.getProperty("expected.machineType");
+        String expectedGpuModel = ConfigReader.getProperty("expected.gpuModel");
+        String expectedGpuCount = ConfigReader.getProperty("expected.gpuCount");
+        String expectedLocalSSD = ConfigReader.getProperty("expected.localSSD");
+        String expectedRegion = ConfigReader.getProperty("expected.region");
+        String expectedDiscount = ConfigReader.getProperty("expected.discount");
 
         // Static wait to ensure the page has loaded
         Thread.sleep(2000);
@@ -124,8 +123,6 @@ public class ComputeEngineTests {
      */
     @AfterClass
     public static void tearDownClass() {
-        if (driver != null) {
-            driver.quit();
-        }
+        tearDown();
     }
 }

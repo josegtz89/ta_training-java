@@ -11,19 +11,27 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class provides utilities for capturing and saving screenshots during test executions.
+ */
 public class ScreenshotUtility {
 
+    /**
+     * Takes a screenshot of the current state of the browser being used in the test.
+     * @param driver The WebDriver instance.
+     * @param fileName The base name for the screenshot file, which will be appended with a timestamp.
+     */
     public static void takeScreenshot(WebDriver driver, String fileName) {
-        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String timestamp = formatter.format(new Date());
-        Path targetPath = Paths.get("./screenshots/", fileName + "_" + timestamp + ".png");
+        String userDesktop = System.getProperty("user.home") + "/Desktop";
+        Path targetPath = Paths.get(userDesktop, fileName + "_" + timestamp + ".png");
         try {
             Files.createDirectories(targetPath.getParent());
-            Files.copy(screenshotFile.toPath(), targetPath);
+            Files.copy(screenshot.toPath(), targetPath);
             System.out.println("Screenshot saved to: " + targetPath.toString());
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Failed to save screenshot: " + e.getMessage());
         }
     }
