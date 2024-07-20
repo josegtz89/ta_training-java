@@ -14,12 +14,11 @@ public class CalculatorHomePage extends BasePage {
 
     @FindBy(xpath = "//span[text()='Add to estimate']")
     private WebElement addToEstimateButton;
-
     @FindBy(xpath = "//h2[contains(text(), 'Compute Engine')]")
     private WebElement computeEngineButton;
 
     /**
-     * Constructor to initialize the HomePage within the driver context.
+     * Constructor to initialize the Google Cloud Calculator HomePage within the driver context.
      * @param driver The WebDriver instance for browser manipulation.
      */
     public CalculatorHomePage(WebDriver driver) {

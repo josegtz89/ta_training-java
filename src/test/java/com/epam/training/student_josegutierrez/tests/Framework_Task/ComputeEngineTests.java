@@ -40,7 +40,7 @@ public class ComputeEngineTests extends BaseTest {
     }
 
     /**
-     * Populates the ComputeEngineConfig object with values from properties files.
+     * Populates the ComputeEngineConfig object with values from properties files as per the environment selected.
      */
     private static void populateConfigFromProperties() {
         try {
@@ -82,16 +82,6 @@ public class ComputeEngineTests extends BaseTest {
         populateConfigFromProperties();
         computeEngineForm.configureComputeEngine(config);
 
-        // Expected data
-        int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
-        String expectedOS = ConfigReader.getProperty("expected.operatingSystem");
-        String expectedMachineType = ConfigReader.getProperty("expected.machineType");
-        String expectedGpuModel = ConfigReader.getProperty("expected.gpuModel");
-        String expectedGpuCount = ConfigReader.getProperty("expected.gpuCount");
-        String expectedLocalSSD = ConfigReader.getProperty("expected.localSSD");
-        String expectedRegion = ConfigReader.getProperty("expected.region");
-        String expectedDiscount = ConfigReader.getProperty("expected.discount");
-
         // Static wait to ensure the page has loaded
         Thread.sleep(2000);
 
@@ -104,6 +94,16 @@ public class ComputeEngineTests extends BaseTest {
         // Check and switch to the new tab
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
+
+        // Expected data
+        int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
+        String expectedOS = ConfigReader.getProperty("expected.operatingSystem");
+        String expectedMachineType = ConfigReader.getProperty("expected.machineType");
+        String expectedGpuModel = ConfigReader.getProperty("expected.gpuModel");
+        String expectedGpuCount = ConfigReader.getProperty("expected.gpuCount");
+        String expectedLocalSSD = ConfigReader.getProperty("expected.localSSD");
+        String expectedRegion = ConfigReader.getProperty("expected.region");
+        String expectedDiscount = ConfigReader.getProperty("expected.discount");
 
         // Assertions
         Assert.assertTrue(estimateSummaryPage.isCostEstimateSummaryVisible(), "Cost Estimate Summary is not visible");

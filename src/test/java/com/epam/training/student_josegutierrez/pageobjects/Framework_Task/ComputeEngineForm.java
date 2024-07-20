@@ -16,37 +16,26 @@ public class ComputeEngineForm extends BasePage {
 
     @FindBy(css = "input[jsname='YPqjbf'][type='number']")
     public WebElement numberOfInstancesInput;
-
     @FindBy(xpath = "//span[contains(text(), 'Operating System / Software')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement operatingSystemDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Machine Family')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement machineFamilyDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Series')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement seriesDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Machine type')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement machineTypeDropdown;
-
     @FindBy(xpath = "//button[@role='switch' and @jsname='DMn7nd' and @aria-label='Add GPUs']")
     private WebElement addGpusSwitch;
-
     @FindBy(xpath = "//span[contains(text(), 'GPU Model')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement gpuModelDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Number of GPUs')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement numberOfGpusDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Local SSD')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement localSSDDropdown;
-
     @FindBy(xpath = "//span[contains(text(), 'Region')]/ancestor::div[contains(@role, 'combobox')]")
     public WebElement regionDropdown;
-
     @FindBy(css = "button[aria-label='Open Share Estimate dialog']")
     private WebElement shareButton;
-
     @FindBy(css = "a[track-name='open estimate summary']")
     private WebElement openEstimateSummaryButton;
 

@@ -18,7 +18,7 @@ public class CloudHomePage extends BasePage {
     private static WebElement searchInput;
 
     /**
-     * Constructor to initialize the CloudHomePage within the driver context.
+     * Constructor to initialize the Cloud HomePage within the driver context.
      * @param driver The WebDriver instance for browser manipulation.
      */
     public CloudHomePage(WebDriver driver) {

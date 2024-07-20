@@ -11,7 +11,7 @@ import java.time.Duration;
 
 /**
  * Page object for interacting with the Estimate summary page of the Google Cloud Pricing Calculator after an estimate has been created.
- * It provides methods to retrieve information about the configuration specified in the Compute Engine form
+ * It provides methods to retrieve information about the configuration specified in the Compute Engine form.
  */
 public class EstimateSummaryPage extends BasePage {
 
@@ -19,31 +19,22 @@ public class EstimateSummaryPage extends BasePage {
     private WebElement costEstimateSummaryTitle;
     @FindBy(xpath = "//span[text()='Number of Instances']/following::span[@class='Kfvdz'][1]")
     private WebElement numberOfInstances;
-
     @FindBy(xpath = "//span[text()='Operating System / Software']/following-sibling::span[@class='Kfvdz']")
     private WebElement operatingSystem;
-
     @FindBy(xpath = "//span[text()='Provisioning Model']/following-sibling::span[@class='Kfvdz']")
     private WebElement provisioningModel;
-
     @FindBy(xpath = "//span[text()='Machine type']/following-sibling::span[@class='Kfvdz']")
     private WebElement machineType;
-
     @FindBy(xpath = "//span[text()='Add GPUs']/following-sibling::span[@class='Kfvdz']")
     private WebElement addGpus;
-
     @FindBy(xpath = "//span[text()='GPU Model']/following-sibling::span[@class='Kfvdz']")
     private WebElement gpuModel;
-
     @FindBy(xpath = "//span[text()='Number of GPUs']/following-sibling::span[@class='Kfvdz']")
     private WebElement numberOfGpus;
-
     @FindBy(xpath = "//span[text()='Local SSD']/following-sibling::span[@class='Kfvdz']")
     private WebElement localSSD;
-
     @FindBy(xpath = "//span[text()='Region']/following-sibling::span[@class='Kfvdz']")
     private WebElement region;
-
     @FindBy(xpath = "//span[text()='Committed use discount options']/following-sibling::span[@class='Kfvdz']")
     private WebElement committedUseDiscount;
 
