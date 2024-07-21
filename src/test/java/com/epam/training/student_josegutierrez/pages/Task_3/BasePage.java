@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.pageobjects.Framework_Task;
+package com.epam.training.student_josegutierrez.pages.Task_3;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -10,7 +10,7 @@ import java.time.Duration;
  */
 public class BasePage {
     protected WebDriver driver;
-    protected static WebDriverWait wait;
+    protected WebDriverWait wait;
 
     /**
      * Constructor to initialize the WebDriver and WebDriverWait.

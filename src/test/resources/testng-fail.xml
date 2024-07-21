@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Fail Test Suite">
+    <listeners>
+        <listener class-name="com.epam.training.student_josegutierrez.utilities.TestListener" />
+    </listeners>
+    <test name="Fail Test">
+        <classes>
+            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.FailTest"/>
+        </classes>
+    </test>
+</suite>

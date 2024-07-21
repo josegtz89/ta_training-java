@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.pageobjects.Framework_Task;
+package com.epam.training.student_josegutierrez.pages.Framework_Task;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

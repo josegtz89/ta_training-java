@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.pageobjects.Framework_Task;
+package com.epam.training.student_josegutierrez.pages.Framework_Task;
 
 import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import org.openqa.selenium.By;
@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  * Page object for interacting with the Compute Engine form on the Google Cloud Pricing Calculator.
  * It provides methods to interact with the elements within the Compute Engine form.
  */
-public class ComputeEngineForm extends BasePage {
+public class ComputeEngineFormPage extends BasePage {
 
     @FindBy(css = "input[jsname='YPqjbf'][type='number']")
     public WebElement numberOfInstancesInput;
@@ -44,7 +44,7 @@ public class ComputeEngineForm extends BasePage {
      * Constructor to initialize the ComputeEngineForm within the driver context.
      * @param driver The WebDriver instance for browser manipulation.
      */
-    public ComputeEngineForm(WebDriver driver) {
+    public ComputeEngineFormPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }

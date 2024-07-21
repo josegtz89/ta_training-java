@@ -2,7 +2,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 
 import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
-import com.epam.training.student_josegutierrez.pageobjects.Framework_Task.*;
+import com.epam.training.student_josegutierrez.pages.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.BaseTest;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 import org.testng.Assert;
@@ -20,23 +20,22 @@ public class ComputeEngineTests extends BaseTest {
     private static CloudHomePage cloudHomePage;
     private static SearchResultsPage searchResultsPage;
     private static CalculatorHomePage calculatorHomePage;
-    private static ComputeEngineForm computeEngineForm;
+    private static ComputeEngineFormPage computeEngineForm;
     private static EstimateSummaryPage estimateSummaryPage;
     private static ComputeEngineConfig config;
 
 
     /**
-     * Initializes WebDriver, page objects, and navigates to the Google Cloud homepage before all tests.
+     * Initializes page objects and navigates to the Google Cloud homepage before all tests.
      */
     @BeforeClass
     public static void setUpClass() {
         cloudHomePage = new CloudHomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);
         calculatorHomePage = new CalculatorHomePage(driver);
-        computeEngineForm = new ComputeEngineForm(driver);
+        computeEngineForm = new ComputeEngineFormPage(driver);
         estimateSummaryPage = new EstimateSummaryPage(driver);
         cloudHomePage.open();
-
     }
 
     /**
@@ -67,35 +66,35 @@ public class ComputeEngineTests extends BaseTest {
      */
     @Test
     public void testComputeEngineEstimateCreation() throws InterruptedException {
-        // Navigate to Google Cloud homepage and perform a search
+        // 1. Navigate to Google Cloud homepage and perform a search
         cloudHomePage.searchFor(ConfigReader.getProperty("search.query"));
 
-        // Select the calculator from the search results
+        // 2. Select the calculator from the search results
         searchResultsPage.goToPricingCalculator();
 
-        // Proceed with adding an estimate and selecting compute engine
+        // 3. Proceed with adding an estimate and selecting compute engine
         calculatorHomePage.addToEstimate();
         calculatorHomePage.selectComputeEngine();
 
-        // Configure the Compute Engine form with the settings from the config model
+        // 4. Configure the Compute Engine form with the settings from the config model
         config = new ComputeEngineConfig();
         populateConfigFromProperties();
         computeEngineForm.configureComputeEngine(config);
 
-        // Static wait to ensure the page has loaded
+        // 5. Static wait to ensure the page has loaded
         Thread.sleep(2000);
 
-        // Share button click
+        // 6. Share button click
         computeEngineForm.clickShareButton();
 
-        // Open Estimate Summary page
+        // 7. Open Estimate Summary page
         computeEngineForm.openEstimateSummary();
 
-        // Check and switch to the new tab
+        // 8. Check and switch to the new tab
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
 
-        // Expected data
+        // 9. Expected data
         int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
         String expectedOS = ConfigReader.getProperty("expected.operatingSystem");
         String expectedMachineType = ConfigReader.getProperty("expected.machineType");
@@ -105,7 +104,7 @@ public class ComputeEngineTests extends BaseTest {
         String expectedRegion = ConfigReader.getProperty("expected.region");
         String expectedDiscount = ConfigReader.getProperty("expected.discount");
 
-        // Assertions
+        // 10. Assertions for Estimate Summary Page
         Assert.assertTrue(estimateSummaryPage.isCostEstimateSummaryVisible(), "Cost Estimate Summary is not visible");
         Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(expectedInstances), "Instance count mismatch");
         Assert.assertEquals(estimateSummaryPage.getOperatingSystem(), expectedOS, "Operating system mismatch");
@@ -116,13 +115,5 @@ public class ComputeEngineTests extends BaseTest {
         Assert.assertEquals(estimateSummaryPage.getLocalSSD(), expectedLocalSSD, "Local SSD mismatch");
         Assert.assertTrue(estimateSummaryPage.getRegion().contains(expectedRegion), "Region mismatch");
         Assert.assertEquals(estimateSummaryPage.getCommittedUseDiscount(), expectedDiscount, "Discount mismatch");
-    }
-
-    /**
-     * Cleans up the WebDriver instance after all tests are completed.
-     */
-    @AfterClass
-    public static void tearDownClass() {
-        tearDown();
     }
 }

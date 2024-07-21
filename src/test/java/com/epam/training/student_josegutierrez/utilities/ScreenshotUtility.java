@@ -25,8 +25,8 @@ public class ScreenshotUtility {
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String timestamp = formatter.format(new Date());
-        String userDesktop = System.getProperty("user.home") + "/Desktop";
-        Path targetPath = Paths.get(userDesktop, fileName + "_" + timestamp + ".png");
+        String targetDirectory = System.getProperty("user.dir") + "/target/screenshots";
+        Path targetPath = Paths.get(targetDirectory, fileName + "_" + timestamp + ".png");
         try {
             Files.createDirectories(targetPath.getParent());
             Files.copy(screenshot.toPath(), targetPath);

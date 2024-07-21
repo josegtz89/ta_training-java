@@ -1,8 +1,8 @@
 package com.epam.training.student_josegutierrez.tests.Task_3;
 
-import com.epam.training.student_josegutierrez.pageobjects.Task_3.HomePage;
-import com.epam.training.student_josegutierrez.pageobjects.Task_3.ComputeEngineForm;
-import com.epam.training.student_josegutierrez.pageobjects.Task_3.EstimateSummaryPage;
+import com.epam.training.student_josegutierrez.pages.Task_3.HomePage;
+import com.epam.training.student_josegutierrez.pages.Task_3.ComputeEngineForm;
+import com.epam.training.student_josegutierrez.pages.Task_3.EstimateSummaryPage;
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.junit.BeforeClass;
 import org.junit.Test;
