@@ -18,35 +18,9 @@ import java.util.ArrayList;
  * entered and selected, and that the final cost estimate summary reflects these selections accurately.
  */
 public class ComputeEngineTests extends BaseTest {
-    private static CloudHomePage cloudHomePage;
-    private static SearchResultsPage searchResultsPage;
-    private static CalculatorHomePage calculatorHomePage;
-    private static ComputeEngineFormPage computeEngineForm;
     private static EstimateSummaryPage estimateSummaryPage;
     private static ComputeEngineConfig config;
 
-
-    /**
-     * Initializes page objects and navigates to the Google Cloud homepage before all tests.
-     */
-    @BeforeClass
-    public static void setUpClass() {
-        //System.out.println("Test1"); // Debugging driver null issue
-        cloudHomePage = new CloudHomePage(driver);
-        searchResultsPage = new SearchResultsPage(driver);
-        calculatorHomePage = new CalculatorHomePage(driver);
-        computeEngineForm = new ComputeEngineFormPage(driver);
-        estimateSummaryPage = new EstimateSummaryPage(driver);
-        cloudHomePage.open();
-        config = new ComputeEngineConfig();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
 
     /**
      * Populates the ComputeEngineConfig object with values from properties files as per the environment selected.
@@ -110,24 +84,39 @@ public class ComputeEngineTests extends BaseTest {
     public void ComputeEngineEstimateCreation(ComputeEngineConfig config) throws InterruptedException {
         //System.out.println("Test2"); // Debugging driver null issue
         // 1. Navigate to Google Cloud homepage and perform a search
+        CloudHomePage cloudHomePage = new CloudHomePage(driver);
+        cloudHomePage.open();
         cloudHomePage.searchFor(ConfigReader.getProperty("search.query"));
+
         // 2. Select the calculator from the search results
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
         searchResultsPage.goToPricingCalculator();
+
         // 3. Proceed with adding an estimate and selecting compute engine
+        CalculatorHomePage calculatorHomePage = new CalculatorHomePage(driver);
         calculatorHomePage.addToEstimate();
         calculatorHomePage.selectComputeEngine();
+
         // 4. Configure the Compute Engine form with the settings from the config model
+        ComputeEngineFormPage computeEngineForm = new ComputeEngineFormPage(driver);
         computeEngineForm.configureComputeEngine(config);
+
         // 5. Static wait to ensure the page has loaded
         Thread.sleep(2000);
+
         // 6. Share button click
         computeEngineForm.clickShareButton();
+
         // 7. Open Estimate Summary page
         computeEngineForm.openEstimateSummary();
+
         // 8. Check and switch to the new tab
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
+
         //9. Perform Assertion of Data
+        estimateSummaryPage = new EstimateSummaryPage(driver);
+        config = new ComputeEngineConfig();
         performAssertions(config);
     }
 
