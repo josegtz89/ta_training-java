@@ -31,7 +31,7 @@ public class ComputeEngineTests extends BaseTest {
      */
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("Test1"); // Debugging driver null issue
+        //System.out.println("Test1"); // Debugging driver null issue
         cloudHomePage = new CloudHomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);
         calculatorHomePage = new CalculatorHomePage(driver);
@@ -46,13 +46,6 @@ public class ComputeEngineTests extends BaseTest {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-    @DataProvider(name = "ConfigData")
-    public static Object[][] provideConfigData() {
-        config = new ComputeEngineConfig();
-        populateConfigFromProperties();
-        return new Object[][] { { config } };
     }
 
     /**
@@ -76,6 +69,13 @@ public class ComputeEngineTests extends BaseTest {
         } catch (Exception e) {
             System.err.println("Error retrieving properties: " + e.getMessage());
         }
+    }
+
+    @DataProvider(name = "ConfigData")
+    public static Object[][] provideConfigData() {
+        config = new ComputeEngineConfig();
+        populateConfigFromProperties();
+        return new Object[][] { { config } };
     }
 
     @Test(
@@ -108,7 +108,7 @@ public class ComputeEngineTests extends BaseTest {
 
 
     public void ComputeEngineEstimateCreation(ComputeEngineConfig config) throws InterruptedException {
-        System.out.println("Test2"); // Debugging driver null issue
+        //System.out.println("Test2"); // Debugging driver null issue
         // 1. Navigate to Google Cloud homepage and perform a search
         cloudHomePage.searchFor(ConfigReader.getProperty("search.query"));
         // 2. Select the calculator from the search results
