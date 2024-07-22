@@ -1,7 +1,8 @@
-package com.epam.training.student_josegutierrez.utilities;
+package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
+import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -18,6 +19,9 @@ public abstract class BaseTest {
     @BeforeClass
     public static void setUp() {
         driver = DriverSetup.getDriver(ConfigReader.getProperty("browser.type"));
+        if (driver == null) {
+            throw new IllegalStateException("Driver did not initialize properly.");
+        }
         driver.manage().window().maximize();
     }
 

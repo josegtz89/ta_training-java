@@ -4,8 +4,13 @@
         <listener class-name="com.epam.training.student_josegutierrez.utilities.TestListener" />
     </listeners>
     <test name="Smoke Test">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
         <classes>
-            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.SmokeTest"/>
+            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.ComputeEngineTests"/>
         </classes>
     </test>
 </suite>

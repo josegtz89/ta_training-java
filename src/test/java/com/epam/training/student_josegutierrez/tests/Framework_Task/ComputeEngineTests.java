@@ -3,11 +3,12 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import com.epam.training.student_josegutierrez.pages.Framework_Task.*;
-import com.epam.training.student_josegutierrez.utilities.BaseTest;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
+import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
 
@@ -30,12 +31,28 @@ public class ComputeEngineTests extends BaseTest {
      */
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("Test1"); // Debugging driver null issue
         cloudHomePage = new CloudHomePage(driver);
         searchResultsPage = new SearchResultsPage(driver);
         calculatorHomePage = new CalculatorHomePage(driver);
         computeEngineForm = new ComputeEngineFormPage(driver);
         estimateSummaryPage = new EstimateSummaryPage(driver);
         cloudHomePage.open();
+        config = new ComputeEngineConfig();
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @DataProvider(name = "ConfigData")
+    public static Object[][] provideConfigData() {
+        config = new ComputeEngineConfig();
+        populateConfigFromProperties();
+        return new Object[][] { { config } };
     }
 
     /**
@@ -61,40 +78,61 @@ public class ComputeEngineTests extends BaseTest {
         }
     }
 
-    /**
-     * Test to verify that all components of the Compute Engine form are correctly entered/selected and validated in the summary.
-     */
-    @Test
-    public void testComputeEngineEstimateCreation() throws InterruptedException {
+    @Test(
+            description = "Verifies all components of the Compute Engine form under normal conditions",
+            groups = {"smoke"},
+            dataProvider = "ConfigData"
+    )
+    public void testBasicComputeEngineForm(ComputeEngineConfig config) throws InterruptedException {
+        ComputeEngineEstimateCreation(config);
+    }
+
+    @Test(
+            description = "Verifies all components of the Compute Engine form under normal conditions",
+            groups = {"regression"},
+            dataProvider = "ConfigData"
+    )
+    public void testComputeEngineEstimateCreation(ComputeEngineConfig config) throws InterruptedException {
+        ComputeEngineEstimateCreation(config);
+    }
+
+    @Test(
+            description = "Intentionally misconfigures settings to validate error handling",
+            groups = {"fail"},
+            dataProvider = "ConfigData"
+    )
+    public void testComputeEngineFailScenario(@NotNull ComputeEngineConfig config) throws InterruptedException {
+        config.setNumberOfInstances(config.getNumberOfInstances() + 1);
+        ComputeEngineEstimateCreation(config);
+    }
+
+
+    public void ComputeEngineEstimateCreation(ComputeEngineConfig config) throws InterruptedException {
+        System.out.println("Test2"); // Debugging driver null issue
         // 1. Navigate to Google Cloud homepage and perform a search
         cloudHomePage.searchFor(ConfigReader.getProperty("search.query"));
-
         // 2. Select the calculator from the search results
         searchResultsPage.goToPricingCalculator();
-
         // 3. Proceed with adding an estimate and selecting compute engine
         calculatorHomePage.addToEstimate();
         calculatorHomePage.selectComputeEngine();
-
         // 4. Configure the Compute Engine form with the settings from the config model
-        config = new ComputeEngineConfig();
-        populateConfigFromProperties();
         computeEngineForm.configureComputeEngine(config);
-
         // 5. Static wait to ensure the page has loaded
         Thread.sleep(2000);
-
         // 6. Share button click
         computeEngineForm.clickShareButton();
-
         // 7. Open Estimate Summary page
         computeEngineForm.openEstimateSummary();
-
         // 8. Check and switch to the new tab
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabs.size() - 1));
+        //9. Perform Assertion of Data
+        performAssertions(config);
+    }
 
-        // 9. Expected data
+    private void performAssertions(ComputeEngineConfig expectedConfig) {
+        // Expected data
         int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
         String expectedOS = ConfigReader.getProperty("expected.operatingSystem");
         String expectedMachineType = ConfigReader.getProperty("expected.machineType");
@@ -103,8 +141,7 @@ public class ComputeEngineTests extends BaseTest {
         String expectedLocalSSD = ConfigReader.getProperty("expected.localSSD");
         String expectedRegion = ConfigReader.getProperty("expected.region");
         String expectedDiscount = ConfigReader.getProperty("expected.discount");
-
-        // 10. Assertions for Estimate Summary Page
+        // Assertions for Estimate Summary Page
         Assert.assertTrue(estimateSummaryPage.isCostEstimateSummaryVisible(), "Cost Estimate Summary is not visible");
         Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(expectedInstances), "Instance count mismatch");
         Assert.assertEquals(estimateSummaryPage.getOperatingSystem(), expectedOS, "Operating system mismatch");

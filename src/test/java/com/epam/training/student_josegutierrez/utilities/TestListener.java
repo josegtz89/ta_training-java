@@ -1,5 +1,6 @@
 package com.epam.training.student_josegutierrez.utilities;
 
+import com.epam.training.student_josegutierrez.tests.Framework_Task.BaseTest;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;

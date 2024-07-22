@@ -4,8 +4,13 @@
         <listener class-name="com.epam.training.student_josegutierrez.utilities.TestListener" />
     </listeners>
     <test name="Fail Test">
+        <groups>
+            <run>
+                <include name="fail"/>
+            </run>
+        </groups>
         <classes>
-            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.FailTest"/>
+            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.ComputeEngineTests"/>
         </classes>
     </test>
 </suite>

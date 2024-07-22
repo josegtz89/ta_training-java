@@ -15,7 +15,7 @@ import com.epam.training.student_josegutierrez.utilities.ConfigReader;
 public class CloudHomePage extends BasePage {
 
     @FindBy(css = "input.mb2a7b[name='q']")
-    private static WebElement searchInput;
+    private WebElement searchInput;
 
     /**
      * Constructor to initialize the Cloud HomePage within the driver context.
@@ -39,7 +39,7 @@ public class CloudHomePage extends BasePage {
      * Searches for a given text using the search box on the homepage.
      * @param searchText The text to search for.
      */
-    public static void searchFor(String searchText) {
+    public void searchFor(String searchText) {
         wait.until(ExpectedConditions.visibilityOf(searchInput));
         searchInput.click();
         searchInput.clear();
