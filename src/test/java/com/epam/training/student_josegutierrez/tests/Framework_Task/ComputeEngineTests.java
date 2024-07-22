@@ -4,10 +4,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import com.epam.training.student_josegutierrez.pages.Framework_Task.*;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
-import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
@@ -75,14 +72,13 @@ public class ComputeEngineTests extends BaseTest {
             groups = {"fail"},
             dataProvider = "ConfigData"
     )
-    public void testComputeEngineFailScenario(@NotNull ComputeEngineConfig config) throws InterruptedException {
+    public void testComputeEngineFailScenario(ComputeEngineConfig config) throws InterruptedException {
         config.setNumberOfInstances(config.getNumberOfInstances() + 1);
         ComputeEngineEstimateCreation(config);
     }
 
 
     public void ComputeEngineEstimateCreation(ComputeEngineConfig config) throws InterruptedException {
-        //System.out.println("Test2"); // Debugging driver null issue
         // 1. Navigate to Google Cloud homepage and perform a search
         CloudHomePage cloudHomePage = new CloudHomePage(driver);
         cloudHomePage.open();
