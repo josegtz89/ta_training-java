@@ -126,6 +126,7 @@ public class ComputeEngineTests extends BaseTest {
         String expectedLocalSSD = ConfigReader.getProperty("expected.localSSD");
         String expectedRegion = ConfigReader.getProperty("expected.region");
         String expectedDiscount = ConfigReader.getProperty("expected.discount");
+
         // Assertions for Estimate Summary Page
         Assert.assertTrue(estimateSummaryPage.isCostEstimateSummaryVisible(), "Cost Estimate Summary is not visible");
         Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(expectedInstances), "Instance count mismatch");

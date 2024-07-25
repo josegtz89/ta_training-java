@@ -51,13 +51,24 @@
       </dependency>
 
       <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>2.11.1</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>2.11.1</version>
+      </dependency>
+
+      <dependency>
           <groupId>io.github.bonigarcia</groupId>
           <artifactId>webdrivermanager</artifactId>
           <version>5.9.1</version>
           <scope>test</scope>
       </dependency>
 
-      <!-- https://mvnrepository.com/artifact/org.testng/testng -->
       <dependency>
           <groupId>org.testng</groupId>
           <artifactId>testng</artifactId>
@@ -91,6 +102,7 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng-all.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng-smoke.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng-fail.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

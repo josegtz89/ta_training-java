@@ -3,13 +3,17 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import com.epam.training.student_josegutierrez.utilities.ConfigReader;
+import com.epam.training.student_josegutierrez.utilities.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
+
 
 /**
  * This abstract class serves as a base for all test classes.
  */
+@Listeners({TestListener.class})
 public abstract class BaseTest {
     protected static WebDriver driver;
 
