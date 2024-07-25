@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import com.epam.training.student_josegutierrez.utilities.ConfigReader;
+import com.epam.training.student_josegutierrez.services.ConfigReader;
 
 /**
  * Page object for the Google Cloud homepage.

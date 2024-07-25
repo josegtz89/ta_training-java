@@ -2,7 +2,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
-import com.epam.training.student_josegutierrez.utilities.ConfigReader;
+import com.epam.training.student_josegutierrez.services.ConfigReader;
 import com.epam.training.student_josegutierrez.utilities.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;

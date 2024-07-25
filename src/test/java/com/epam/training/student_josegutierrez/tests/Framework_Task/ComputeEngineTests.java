@@ -3,7 +3,7 @@ package com.epam.training.student_josegutierrez.tests.Framework_Task;
 
 import com.epam.training.student_josegutierrez.models.ComputeEngineConfig;
 import com.epam.training.student_josegutierrez.pages.Framework_Task.*;
-import com.epam.training.student_josegutierrez.utilities.ConfigReader;
+import com.epam.training.student_josegutierrez.services.ConfigReader;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
