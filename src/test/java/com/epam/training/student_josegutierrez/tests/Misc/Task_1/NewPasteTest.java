@@ -1,7 +1,7 @@
-package com.epam.training.student_josegutierrez.tests.Task_1;
+package com.epam.training.student_josegutierrez.tests.Misc.Task_1;
 
-import com.epam.training.student_josegutierrez.pages.Task_1.PasteBinHome;
-import com.epam.training.student_josegutierrez.pages.Task_1.PasteBinOptions;
+import com.epam.training.student_josegutierrez.pages.Misc.Task_1.PasteBinHome;
+import com.epam.training.student_josegutierrez.pages.Misc.Task_1.PasteBinOptions;
 import com.epam.training.student_josegutierrez.driver.DriverSetup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

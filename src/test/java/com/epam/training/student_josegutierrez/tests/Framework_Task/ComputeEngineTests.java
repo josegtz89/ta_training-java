@@ -113,10 +113,10 @@ public class ComputeEngineTests extends BaseTest {
         //9. Perform Assertion of Data
         estimateSummaryPage = new EstimateSummaryPage(driver);
         config = new ComputeEngineConfig();
-        performAssertions(config);
+        performAssertions();
     }
 
-    private void performAssertions(ComputeEngineConfig expectedConfig) {
+    private void performAssertions() {
         // Expected data
         int expectedInstances = Integer.parseInt(ConfigReader.getProperty("expected.instances"));
         String expectedOS = ConfigReader.getProperty("expected.operatingSystem");

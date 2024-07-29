@@ -103,6 +103,9 @@
                         <suiteXmlFile>src/test/resources/testng-all.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng-smoke.xml</suiteXmlFile>
                         <suiteXmlFile>src/test/resources/testng-fail.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/Rework/testng-all.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/Rework/testng-smoke.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/Rework/testng-fail.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

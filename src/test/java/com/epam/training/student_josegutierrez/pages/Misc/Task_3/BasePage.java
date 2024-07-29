@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.pages.Task_3;
+package com.epam.training.student_josegutierrez.pages.Misc.Task_3;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
