@@ -1,4 +1,4 @@
-package com.epam.training.student_josegutierrez.tests.Framework_Task;
+package com.epam.training.student_josegutierrez.tests.Old_Framework_Task;
 
 
 import com.epam.training.student_josegutierrez.driver.DriverSetup;

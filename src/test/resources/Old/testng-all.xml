@@ -5,7 +5,7 @@
     </listeners>
     <test name="Complete Test">
         <classes>
-            <class name="com.epam.training.student_josegutierrez.tests.Framework_Task.ComputeEngineTests"/>
+            <class name="com.epam.training.student_josegutierrez.tests.Old_Framework_Task.ComputeEngineTests"/>
         </classes>
     </test>
 </suite>
