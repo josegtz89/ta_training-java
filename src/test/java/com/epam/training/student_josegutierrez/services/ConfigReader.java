@@ -20,9 +20,11 @@ public class ConfigReader {
      * Loads properties from files with environment-specific properties if available.
      */
     private static void loadProperties() {
+        String environment = System.getProperty("environment", "dev");
         try {
-            String environment = System.getProperty("environment", "dev");
-            properties.load(new FileInputStream("src/test/resources/" + environment + ".properties"));
+            FileInputStream propFile = new FileInputStream("src/test/resources/" + environment + ".properties");
+            properties.load(propFile);
+            propFile.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to load properties files: " + e.getMessage());
